@@ -1,0 +1,6 @@
+[package]
+name = "cuarto-server"
+version = "0.1.0"
+authors = ["Dario Seyb <dario.seyb@gmail.com>"]
+
+[dependencies]
