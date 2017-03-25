@@ -3,6 +3,7 @@
 
 extern crate iron;
 extern crate params;
+extern crate mongodb;
 
 use iron::prelude::*;
 
