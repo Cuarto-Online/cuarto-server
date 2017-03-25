@@ -5,7 +5,6 @@ use iron::prelude::*;
 use router::Router;
 
 fn get_page(req: &mut Request) -> IronResult<Response> {
-    print!("Got request!");
     Ok(Response::with((iron::status::Ok, "Got page")))
 }
 
