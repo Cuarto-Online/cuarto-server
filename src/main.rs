@@ -1,19 +1,24 @@
+// Visit `http://127.0.0.1:3000/?user[name]=Marie` to be greeted with a welcome message. Any other
+// request will return a 404 error.
+
 extern crate iron;
-extern crate router;
+extern crate params;
 
 use iron::prelude::*;
-use router::Router;
 
-fn get_page(req: &mut Request) -> IronResult<Response> {
-    Ok(Response::with((iron::status::Ok, "Got page")))
+fn handle_user(req: &mut Request) -> IronResult<Response> {
+    use params::{Params, Value};
+
+    let map = req.get_ref::<Params>().unwrap();
+
+    match map.find(&["user", "name"]) {
+        Some(&Value::String(ref name)) if name == "Jasper" => {
+            Ok(Response::with((iron::status::Ok, "Welcome back, Jasper!")))
+        },
+        _ => Ok(Response::with(iron::status::NotFound)),
+    }
 }
 
-
 fn main() {
-
-    let mut router = Router::new();
-
-    router.get("/:page", get_page, "page");
-
-    Iron::new(router).http("localhost:3000").unwrap();
+    Iron::new(handle_user).http("127.0.0.1:3000").unwrap();
 }
